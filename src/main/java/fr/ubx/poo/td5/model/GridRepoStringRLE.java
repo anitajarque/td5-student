@@ -1,5 +1,6 @@
 package fr.ubx.poo.td5.model;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -21,16 +22,21 @@ public class GridRepoStringRLE implements GridRepo, GridRepoIO{
 
         for (int i = 0; i < str.length(); i++)
         {
-            // compte les occurrences du caractère à l'index `i`
-            count = 1;
-            while (i + 1 < str.length() && str.charAt(i) == str.charAt(i + 1))
-            {
-                count++;
-                i++;
+            if(str.charAt(i)=='x'){
+                encoding+=str.charAt(i);
             }
+            else{
+                // compte les occurrences du caractère à l'index `i`
+                count = 1;
+                while (i + 1 < str.length() && str.charAt(i) == str.charAt(i + 1) && count<9)
+                {
+                    count++;
+                    i++;
+                }
 
-            // ajoute le caractère courant et son nombre au résultat
-            encoding += String.valueOf(count) + str.charAt(i);
+                // ajoute le caractère courant et son nombre au résultat
+                encoding +=  str.charAt(i) + String.valueOf(count);
+            }
         }
 
         return encoding;
@@ -107,11 +113,19 @@ public class GridRepoStringRLE implements GridRepo, GridRepoIO{
 
     @Override
     public Grid load(Reader in) throws IOException {
-        return null;
+        int c=0;
+        String x="";
+        while ((c=in.read()) != -1){
+            x+=(char)c;
+        }
+        return load(x);
     }
 
     @Override
     public void export(Grid grid, Writer ou) throws IOException {
-
+        String newExport = export(grid);
+        for(int i=0; i<newExport.length(); i++){
+            ou.write(newExport.charAt(i));
+        }
     }
 }

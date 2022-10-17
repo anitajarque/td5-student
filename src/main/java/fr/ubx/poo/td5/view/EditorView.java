@@ -7,7 +7,12 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import javax.print.DocFlavor;
+import javax.swing.*;
+import java.io.*;
 
 public class EditorView extends BorderPane {
     private final Stage stage;
@@ -30,6 +35,7 @@ public class EditorView extends BorderPane {
         // Create menu
         MenuBar menuBar = new MenuBar();
         Menu fileMenu = new Menu("File");
+        FileChooser fileChooser = new FileChooser();
 
         MenuItem loadItemJ = new MenuItem("Load from Java declaration");
         MenuItem exportItemJ = new MenuItem("Export as Java declaration");
@@ -39,12 +45,14 @@ public class EditorView extends BorderPane {
         MenuItem exportItemSZ = new MenuItem("Export as compressed string");
         MenuItem exitItem = new MenuItem("Exit");
         MenuItem newItem = new MenuItem("New map");
+        MenuItem loadItemF = new MenuItem("Load from file");
+        MenuItem exportItemF = new MenuItem("Export as file");
         exitItem.setAccelerator(KeyCombination.keyCombination("Ctrl+Q"));
         fileMenu.getItems().addAll(
                 loadItemJ, exportItemJ, new SeparatorMenuItem(),
                 loadItemS, exportItemS, new SeparatorMenuItem(),
                 loadItemSZ, exportItemSZ, new SeparatorMenuItem(),
-                newItem, new SeparatorMenuItem(),
+                newItem, new SeparatorMenuItem(), loadItemF, exportItemF, new SeparatorMenuItem(),
                 exitItem);
         menuBar.getMenus().addAll(fileMenu);
         this.setTop(menuBar);
@@ -106,6 +114,41 @@ public class EditorView extends BorderPane {
 
         // Exit
         exitItem.setOnAction(e -> System.exit(0));
+
+        // Load from file
+        loadItemF.setOnAction(e -> {
+            File file = fileChooser.showOpenDialog(stage);
+            if (file != null) {
+                // Chargement depuis un fichier (avec compression)
+                try {
+                    Reader in = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsolutePath()),"UTF-8"));
+                    this.grid = gridRepoStringRLE.load(in);
+                    updateGrid(grid);
+
+                } catch (UnsupportedEncodingException ex) {
+                    ex.printStackTrace();
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        // Export to file
+        exportItemF.setOnAction(e -> {
+            File file = fileChooser.showSaveDialog(stage);
+            if (file != null) {
+                // Sauvegarde dans un fichier (avec compression)
+                try {
+                    Writer ou = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
+                    gridRepoStringRLE.export(grid, ou);
+                    ou.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
     private void updateGrid(Grid grid) {
