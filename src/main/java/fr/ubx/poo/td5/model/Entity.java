@@ -20,6 +20,6 @@ public enum Entity {
             if (entity.getCode() == c)
                 return entity;
         }
-        return null;
+        throw new GridException("Invalid Character");
     }
 }

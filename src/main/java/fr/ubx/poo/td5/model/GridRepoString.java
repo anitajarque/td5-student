@@ -17,6 +17,9 @@ public class GridRepoString implements GridRepo{
                 total++;
             }
         }
+        if(string.charAt(string.length()-1)!=EOL){
+            throw new GridException("Missing eol character");
+        }
         columna=total/x;
         Grid grid= new Grid(columna, x);
         for(int i=0; i<columna; i++){ //column
