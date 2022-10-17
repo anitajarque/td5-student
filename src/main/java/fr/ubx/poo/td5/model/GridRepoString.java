@@ -42,4 +42,13 @@ public class GridRepoString implements GridRepo{
         }
         return s.toString();
     }
+    public Grid create(int width, int height) {
+        Grid grid= new Grid(width, height);
+        for(int i=0; i<width; i++){ //column
+            for(int j=0;j<height; j++) { //file
+                grid.set(i,j, Entity.fromCode('G'));
+            }
+        }
+        return grid;
+    }
 }

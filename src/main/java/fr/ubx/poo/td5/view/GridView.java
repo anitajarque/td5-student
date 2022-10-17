@@ -1,6 +1,7 @@
 package fr.ubx.poo.td5.view;
 
 import fr.ubx.poo.td5.model.Grid;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.BorderPane;
 
 public class GridView extends BorderPane {
@@ -29,6 +30,17 @@ public class GridView extends BorderPane {
             if (e.isShiftDown()) {
                 update(tile, i, j);
             }
+        });
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setBrightness(-0.2);
+        tile.setOnMouseEntered(e -> {
+            if (e.isShiftDown()) {
+                update(tile, i, j);
+            }
+            tile.setEffect(colorAdjust);
+        });
+        tile.setOnMouseExited(e -> {
+            tile.setEffect(null);
         });
     }
 

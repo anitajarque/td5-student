@@ -20,7 +20,8 @@ public class EditorView extends BorderPane {
         this.stage = stage;
          GridRepo gridRepoVar = new GridRepoVar();
          GridRepo gridRepoString = new GridRepoString();
-         GridRepo gridRepoStringRLE = new GridRepoStringRLE();
+         //GridRepo gridRepoStringRLE = new GridRepoStringRLE();
+         GridRepoStringRLE gridRepoStringRLE = new GridRepoStringRLE();
 
         // Tile picker
         this.pickerView = new PickerView();
@@ -37,15 +38,33 @@ public class EditorView extends BorderPane {
         MenuItem loadItemSZ = new MenuItem("Load from compressed string");
         MenuItem exportItemSZ = new MenuItem("Export as compressed string");
         MenuItem exitItem = new MenuItem("Exit");
+        MenuItem newItem = new MenuItem("New map");
         exitItem.setAccelerator(KeyCombination.keyCombination("Ctrl+Q"));
         fileMenu.getItems().addAll(
                 loadItemJ, exportItemJ, new SeparatorMenuItem(),
                 loadItemS, exportItemS, new SeparatorMenuItem(),
                 loadItemSZ, exportItemSZ, new SeparatorMenuItem(),
+                newItem, new SeparatorMenuItem(),
                 exitItem);
         menuBar.getMenus().addAll(fileMenu);
         this.setTop(menuBar);
 
+
+        // New map
+        newItem.setOnAction(e -> {
+            Form form = new Form(stage, "Size of the map : width x height");
+            String[] parts = form.getText().replaceAll("\\s+","").split("x");
+            if (parts.length != 2)
+                return;
+            try {
+                int x = Integer.parseInt(parts[0]);
+                int y = Integer.parseInt(parts[1]);
+                this.grid = ((GridRepoString) gridRepoString).create(x, y);
+                updateGrid(grid);
+            } catch (NumberFormatException numberFormatException) {
+                return;
+            }
+        });
 
         // Load from Java declaration
         loadItemJ.setOnAction(e -> {
@@ -107,5 +126,6 @@ public class EditorView extends BorderPane {
         alert.setResizable(true);
         alert.showAndWait();
     }
+
 
 }

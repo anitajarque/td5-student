@@ -1,6 +1,10 @@
 package fr.ubx.poo.td5.model;
 
-public class GridRepoStringRLE implements GridRepo{
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+
+public class GridRepoStringRLE implements GridRepo, GridRepoIO{
 
     //RLE method
     public static String encode(String str)
@@ -99,5 +103,15 @@ public class GridRepoStringRLE implements GridRepo{
             System.out.println(s.toString());
         }
         return encode(s.toString());
+    }
+
+    @Override
+    public Grid load(Reader in) throws IOException {
+        return null;
+    }
+
+    @Override
+    public void export(Grid grid, Writer ou) throws IOException {
+
     }
 }
