@@ -54,7 +54,7 @@ public class GridRepoStringRLE implements GridRepo, GridRepoIO{
 
         for (int i = 0; i < str.length(); i++)
         {
-            if(i+1<str.length() && str.charAt(i+1)>='0' && str.charAt(i+1)<='9'){
+            if(i+1<str.length() && Character.isDigit(str.charAt(i+1)) ){ //str.charAt(i+1)>='0' && str.charAt(i+1)<='9'
                 for(int j=0; j<Integer.parseInt(String.valueOf(str.charAt(i+1))); j++){
                     decoding += str.charAt(i);
                 }

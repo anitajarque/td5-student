@@ -1,5 +1,7 @@
 package fr.ubx.poo.td5.model;
 
+import javax.swing.text.Position;
+
 public class GridRepoString implements GridRepo{
 
     final char EOL = 'x';
@@ -50,5 +52,10 @@ public class GridRepoString implements GridRepo{
             }
         }
         return grid;
+    }
+
+    public Graph<Position> getGraph(Grid grid){
+
+        return null;
     }
 }

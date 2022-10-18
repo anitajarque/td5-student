@@ -35,6 +35,8 @@ public class EditorView extends BorderPane {
         // Create menu
         MenuBar menuBar = new MenuBar();
         Menu fileMenu = new Menu("File");
+        Menu editMenu = new Menu("Edit");
+        MenuItem marksItem = new MenuItem("Mark Item");
         FileChooser fileChooser = new FileChooser();
 
         MenuItem loadItemJ = new MenuItem("Load from Java declaration");
@@ -48,6 +50,9 @@ public class EditorView extends BorderPane {
         MenuItem loadItemF = new MenuItem("Load from file");
         MenuItem exportItemF = new MenuItem("Export as file");
         exitItem.setAccelerator(KeyCombination.keyCombination("Ctrl+Q"));
+        MenuItem connectivityItem = new MenuItem("Check connectivity");
+
+        editMenu.getItems().addAll(connectivityItem, marksItem);
         fileMenu.getItems().addAll(
                 loadItemJ, exportItemJ, new SeparatorMenuItem(),
                 loadItemS, exportItemS, new SeparatorMenuItem(),
@@ -57,6 +62,12 @@ public class EditorView extends BorderPane {
         menuBar.getMenus().addAll(fileMenu);
         this.setTop(menuBar);
 
+        connectivityItem.setOnAction(e -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Map may be fully connected ???");
+            alert.showAndWait();
+        });
 
         // New map
         newItem.setOnAction(e -> {

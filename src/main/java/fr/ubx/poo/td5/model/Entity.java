@@ -22,4 +22,11 @@ public enum Entity {
         }
         throw new GridException("Invalid Character");
     }
+
+    public boolean isAccessible(){
+        if(fromCode(code)==BIGROCK && fromCode(code)== ROCK){
+            return false;
+        }
+        return true;
+    }
 }
