@@ -6,6 +6,7 @@ public class GridRepoString implements GridRepo{
 
     final char EOL = 'x';
 
+
     @Override
     public Grid load(String string) {
         int x=0;
@@ -24,8 +25,8 @@ public class GridRepoString implements GridRepo{
         }
         columna=total/x;
         Grid grid= new Grid(columna, x);
-        for(int i=0; i<columna; i++){ //column
-            for(int j=0;j<x; j++) { //file
+        for(int i=0; i<x; i++){ //column
+            for(int j=0;j<columna; j++) { //file
                 grid.set(i,j, Entity.fromCode(string.charAt(i*(columna)+j+i)));
             }
         }
@@ -45,7 +46,7 @@ public class GridRepoString implements GridRepo{
         return s.toString();
     }
     public Grid create(int width, int height) {
-        Grid grid= new Grid(width, height);
+        Grid grid= new Grid(height, width);
         for(int i=0; i<width; i++){ //column
             for(int j=0;j<height; j++) { //file
                 grid.set(i,j, Entity.fromCode('G'));
@@ -54,8 +55,15 @@ public class GridRepoString implements GridRepo{
         return grid;
     }
 
-    public Graph<Position> getGraph(Grid grid){
+    public Graph<Node> getGraph(Grid grid){
+        for(int i=0; i<grid.getHeight(); i++){ //column
+            for(int j=0;j< grid.getWidth(); j++) { //file
+                if(grid.get(i,j).isAccessible()){
+                    Node node = new Node(grid.get(i,j));
 
+                }
+            }
+        }
         return null;
     }
 }

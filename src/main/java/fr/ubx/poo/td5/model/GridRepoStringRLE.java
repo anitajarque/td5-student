@@ -90,8 +90,8 @@ public class GridRepoStringRLE implements GridRepo, GridRepoIO{
         }
         columna=total/x;
         Grid grid= new Grid(columna, x);
-        for(int i=0; i<columna; i++){ //column
-            for(int j=0;j<x; j++) { //file
+        for(int i=0; i<x; i++){ //column
+            for(int j=0;j<columna; j++) { //file
                 grid.set(i,j, Entity.fromCode(string.charAt(i*(columna)+j+i)));
             }
         }

@@ -45,9 +45,9 @@ public class GridRepoVar implements GridRepo {
         if (entities == null)
             return null;
         // Votre code ici
-        Grid grid= new Grid(sample1[0].length, sample1.length);
-        for(int i=0; i<sample1[0].length; i++){ //column
-            for(int j=0;j< sample1.length; j++) { //file
+        Grid grid= new Grid(sample1.length, sample1[0].length);
+        for(int i=0; i<sample1.length; i++){ //column
+            for(int j=0;j< sample1[0].length; j++) { //file
                 grid.set(i,j, sample1[i][j]);
             }
         }
@@ -61,9 +61,9 @@ public class GridRepoVar implements GridRepo {
         */
         StringBuilder s = new StringBuilder();
         s.append( "{");
-        for(int i=0; i<sample1[0].length; i++){ //column
+        for(int i=0; i<sample1.length; i++){ //column
             s.append("\n");
-            for(int j=0;j< sample1.length; j++) { //file
+            for(int j=0;j< sample1[0].length; j++) { //file
                 s.append(grid.get(i,j).toString()+", ");
             }
             s.append( "},");

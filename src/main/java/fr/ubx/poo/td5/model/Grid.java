@@ -23,11 +23,11 @@ public class Grid {
 
 
     public Entity get(int i, int j) {
-        return grid[j][i];
+        return grid[i][j];
     }
 
     public void set(int i, int j, Entity entity) {
-        grid[j][i] = entity;
+        grid[i][j] = entity;
     }
 
 }
